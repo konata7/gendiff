@@ -1,9 +1,9 @@
 install:
 	npm ci --legacy-peer-deps
+	npm link
 
 run:
-	bin/nodejs-package.js 10
-
+	node bin/gendiff.js
 test:
 	npx jest
 

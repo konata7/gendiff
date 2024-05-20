@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Compares two configuration files and shows a difference",
   "main": "index.js",
+  "bin": {
+    "gendiff" : "bin/gendiff.js"
+  },
   "scripts": {
     "test": "npx jest"
   },
@@ -14,6 +17,7 @@
   "author": "Pavel Nikolaidi",
   "license": "ISC",
   "dependencies": {
+    "commander": "^12.1.0",
     "debug": "^4.3.4",
     "lodash": "^4.17.21"
   },
