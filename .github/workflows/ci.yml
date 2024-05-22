@@ -14,7 +14,7 @@ jobs:
           - { index: 2, os-name: 'macos-latest', os-label: 'macOS' }
           - { index: 3, os-name: 'windows-latest', os-label: 'Windows' }
         node: [ '16', '20' ]
-    name: "Tests (${{ matrix.os.os-label }})"
+    name: "Tests (${{ matrix.os.os-label }}, node:${{ matrix.node }})"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -31,16 +31,10 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v4
 
-      - name: setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: '9'
-
       - name: setup node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
 
       - name: install dependencies
         run: make install
