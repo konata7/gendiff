@@ -9,9 +9,12 @@ jobs:
   test:
     strategy:
       matrix:
-        platform: [ ubuntu-latest, macOS-latest ]
-        node: [ '12', '10' ]
-    name: test
+        os:
+          - { index: 1, os-name: 'ubuntu-latest', os-label: 'Linux' }
+          - { index: 2, os-name: 'macos-latest', os-label: 'macOS' }
+          - { index: 3, os-name: 'windows-latest', os-label: 'Windows' }
+        node: [ '16', '20' ]
+    name: "Tests (${{ matrix.os.os-label }})"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -22,14 +25,28 @@ jobs:
   coverage:
     needs: [ test ]
     name: coverage
+    if: ${{ github.event_name == 'push' }} # Publish coverage only for push commits, not PRs.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: setup pnpm
+        uses: pnpm/action-setup@v3
         with:
-          node-version: '20'
-      - run: make install
-      - uses: paambaati/codeclimate-action@v6.0.0
+          version: '9'
+
+      - name: setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: install dependencies
+        run: make install
+
+      - name: publish code coverage to code-climate (duh)
+        uses: paambaati/codeclimate-action@v6.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
