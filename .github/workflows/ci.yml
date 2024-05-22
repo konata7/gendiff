@@ -17,11 +17,20 @@ jobs:
     name: "Tests (${{ matrix.os.os-label }}, node:${{ matrix.node }})"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
-      - run: make install
-      - run: make lint
-      - run: make test
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: setup node.js
+        uses: actions/setup-node@v4
+
+      - name: install dependencies
+        run: make install
+
+      - name: run linter
+        run: make lint
+
+      - name: run tests
+        run: make test
   coverage:
     needs: [ test ]
     name: coverage
