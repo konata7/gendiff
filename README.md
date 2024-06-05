@@ -8,3 +8,4 @@
 # demo
 [![asciicast](https://asciinema.org/a/Hw4QUrxifiKT2iwxJcpA03Mfw.svg)](https://asciinema.org/a/Hw4QUrxifiKT2iwxJcpA03Mfw)
 [![asciicast](https://asciinema.org/a/OKK31Sptwl9ClaHnx2HaIGLpf.svg)](https://asciinema.org/a/OKK31Sptwl9ClaHnx2HaIGLpf)
+[![asciicast](https://asciinema.org/a/1vevPhoJnXdJt73uoHqYZwI7N.svg)](https://asciinema.org/a/1vevPhoJnXdJt73uoHqYZwI7N)
