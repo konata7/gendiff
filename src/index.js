@@ -13,7 +13,7 @@ program
   .option('-f, --format <type>', 'output format')
   .argument('<filepath1>')
   .argument('<filepath2>')
-  .action((filepath1, filepath2) => {
+  .action((filepath1, filepath2, type) => {
     const file1 = fs.readFileSync(path.resolve(filepath1), 'utf-8');
     const format1 = path.extname(filepath1);
     const file2 = fs.readFileSync(path.resolve(filepath2), 'utf-8');
@@ -22,7 +22,7 @@ program
     const obj1 = parse(file1, format1);
     const obj2 = parse(file2, format2);
 
-    console.log(genDiff(obj1, obj2));
+    console.log(genDiff(obj1, obj2, type.format));
   });
 
 export default () => program.parse();
