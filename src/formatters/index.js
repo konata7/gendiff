@@ -8,7 +8,7 @@ const format = (obj1, obj2, uniqKeys, formatName = 'default') => {
     const obj2Value = obj2[key];
 
     if (formatName === 'plain') {
-      acc.push(plainFormat.formatKey(key, obj1Value, obj2Value));
+      plainFormat.formatKey(key, obj1Value, obj2Value).forEach((line) => acc.push(line));
     } else if (formatName === 'json') {
       jsonFormat.formatKey(key, obj1Value, obj2Value, acc);
     } else {
