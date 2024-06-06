@@ -57,3 +57,13 @@ Property 'timeout' was updated. From 50 to 20
 Property 'verbose' was added with value: true`,
   );
 });
+test('--format json', () => {
+  const file1 = readFile('flat1.json');
+  const file2 = readFile('flat2.json');
+  const obj1 = parse(file1, path.extname('flat1.json'));
+  const obj2 = parse(file2, path.extname('flat2.json'));
+
+  expect(genDiff(obj1, obj2, 'json')).toEqual(
+    '{"follow__deleted":false,"host":"hexlet.io","proxy__deleted":"123.234.53.22","timeout":{"__old":50,"__new":20},"verbose__added":true}',
+  );
+});
