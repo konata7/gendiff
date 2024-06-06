@@ -8,7 +8,7 @@ const format = (obj1, obj2, uniqKeys, formatName = 'default') => {
     const obj2Value = obj2[key];
 
     if (formatName === 'plain') {
-      plainFormat.formatKey(key, obj1Value, obj2Value, acc);
+      acc.push(plainFormat.formatKey(key, obj1Value, obj2Value));
     } else if (formatName === 'json') {
       jsonFormat.formatKey(key, obj1Value, obj2Value, acc);
     } else {
