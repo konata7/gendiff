@@ -42,14 +42,11 @@ Package also can be used as a library:
 ```js
 import genDiff from 'gendiff';
 
-const obj1 = { a: 10, b: 15 };
-const obj2 = { a: 15 };
-
-// format parameter (optional) sets output format. Allowed values: 
-// 'plain', 'json', undefined
+// format parameter (optional, default output - stylish) sets output format. Allowed values: 
+// 'stylish', 'plain', 'json'
 const format = 'plain';
 
-const diff = genDiff(obj1, obj2, format);
+const diff = genDiff(filepath1, filepath2, format);
 console.log(diff);
 ```
 
