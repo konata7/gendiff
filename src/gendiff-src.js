@@ -7,7 +7,7 @@ import parse from './parsers.js';
 const makeDiffObject = (obj1, obj2) => {
   const diffObject = {};
 
-  const uniqKeys = _.uniq(Object.keys(obj1).concat(Object.keys(obj2)).sort());
+  const uniqKeys = _.sortBy(_.uniq(Object.keys(obj1).concat(Object.keys(obj2))));
   uniqKeys.forEach((key) => {
     if (obj1[key] === undefined) {
       diffObject[`${key}__added`] = obj2[key];
