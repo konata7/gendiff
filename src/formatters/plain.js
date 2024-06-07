@@ -3,8 +3,8 @@ const filterUnchanged = (diffObject) => Object.keys(diffObject).filter((key) => 
   || typeof diffObject[key] === 'object');
 
 const makeStringArray = (diffObject) => filterUnchanged(diffObject).map((key) => {
-  if (key.endsWith('__added')) return `Property '${key.split('__')[0]}' was added with value: ${diffObject[key]}`;
-  if (key.endsWith('__deleted')) return `Property '${key.split('__')[0]}' was removed`;
+  if (key.endsWith('__added')) return `Property '${key.replace('__added', '')}' was added with value: ${diffObject[key]}`;
+  if (key.endsWith('__deleted')) return `Property '${key.replace('__deleted', '')}' was removed`;
 
   // eslint-disable-next-line no-underscore-dangle
   return `Property '${key}' was updated. From ${diffObject[key].__old} to ${diffObject[key].__new}`;
