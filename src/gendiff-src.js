@@ -5,21 +5,14 @@ import format from './formatters/index.js';
 import parse from './parsers.js';
 
 const makeDiffObject = (obj1, obj2) => {
-  const diffObject = {};
-
   const uniqKeys = _.sortBy(_.uniq(Object.keys(obj1).concat(Object.keys(obj2))));
-  uniqKeys.forEach((key) => {
-    if (obj1[key] === undefined) {
-      diffObject[`${key}__added`] = obj2[key];
-    } else if (obj2[key] === undefined) {
-      diffObject[`${key}__deleted`] = obj1[key];
-    } else if (obj1[key] === obj2[key]) {
-      diffObject[`${key}`] = obj2[key];
-    } else {
-      diffObject[`${key}`] = { __old: obj1[key], __new: obj2[key] };
-    }
-  });
-  return diffObject;
+
+  return uniqKeys.reduce((acc, currKey) => {
+    if (obj1[currKey] === undefined) return { ...acc, [`${currKey}__added`]: obj2[currKey] };
+    if (obj2[currKey] === undefined) return { ...acc, [`${currKey}__deleted`]: obj1[currKey] };
+    if (obj1[currKey] === obj2[currKey]) return { ...acc, [currKey]: obj1[currKey] };
+    return { ...acc, [currKey]: { __old: obj1[currKey], __new: obj2[currKey] } };
+  }, {});
 };
 const genDiff = (filepath1, filepath2, outputFormat) => {
   const file1 = fs.readFileSync(path.resolve(filepath1), 'utf-8');
