@@ -31,5 +31,5 @@ test('--format json', () => {
   const file1 = getFixturePath('flat1.json');
   const file2 = getFixturePath('flat2.json');
 
-  expect(genDiff(file1, file2, 'json')).toEqual(readFile('resultJSON.txt'));
+  expect(genDiff(file1, file2, 'json')).toEqual(readFile('resultJson.txt'));
 });
