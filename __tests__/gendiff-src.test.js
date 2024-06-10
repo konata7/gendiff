@@ -19,16 +19,7 @@ test('flat yaml', () => {
   const file1 = getFixturePath('flat1.yaml');
   const file2 = getFixturePath('flat2.yml');
 
-  expect(genDiff(file1, file2)).toEqual(
-    `{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}`,
-  );
+  expect(genDiff(file1, file2)).toEqual(readFile('resultStylish.txt'));
 });
 test('--format plain', () => {
   const file1 = getFixturePath('flat1.yaml');
