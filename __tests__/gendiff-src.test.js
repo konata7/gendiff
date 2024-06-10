@@ -33,7 +33,7 @@ test('--format json', () => {
 
   expect(genDiff(file1, file2, 'json')).toEqual(readFile('resultJson.txt'));
 });
-test('--format unsupported', () => {
+test('--format *unsupported*', () => {
   const file1 = getFixturePath('flat1.json');
   const file2 = getFixturePath('flat2.json');
 
@@ -43,4 +43,13 @@ test('--format unsupported', () => {
   expect(logSpy).toHaveBeenCalled();
   expect(logSpy).toHaveBeenCalledTimes(1);
   expect(logSpy).toHaveBeenCalledWith('Error: \'someUnsupportedOutputFormat\' output format is not supported');
+});
+test('unsupported file format', () => {
+  const file1 = getFixturePath('resultJson.txt');
+
+  const logSpy = jest.spyOn(console, 'log');
+
+  genDiff(file1, file1);
+  expect(logSpy).toHaveBeenCalled();
+  expect(logSpy).toHaveBeenCalledWith('txt file format is not supported.');
 });
