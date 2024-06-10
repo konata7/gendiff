@@ -1,26 +1,19 @@
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import { expect, test } from '@jest/globals';
+import fs from 'fs';
 import genDiff from '../src/gendiff-src.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf8');
 
 test('flat json', () => {
   const file1 = getFixturePath('flat1.json');
   const file2 = getFixturePath('flat2.json');
 
-  expect(genDiff(file1, file2)).toEqual(
-    `{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}`,
-  );
+  expect(genDiff(file1, file2)).toEqual(readFile('resultStylish.txt'));
 });
 test('flat yaml', () => {
   const file1 = getFixturePath('flat1.yaml');
@@ -41,18 +34,11 @@ test('--format plain', () => {
   const file1 = getFixturePath('flat1.yaml');
   const file2 = getFixturePath('flat2.yml');
 
-  expect(genDiff(file1, file2, 'plain')).toEqual(
-    `Property 'follow' was removed
-Property 'proxy' was removed
-Property 'timeout' was updated. From 50 to 20
-Property 'verbose' was added with value: true`,
-  );
+  expect(genDiff(file1, file2, 'plain')).toEqual(readFile('resultPlain.txt'));
 });
 test('--format json', () => {
   const file1 = getFixturePath('flat1.json');
   const file2 = getFixturePath('flat2.json');
 
-  expect(genDiff(file1, file2, 'json')).toEqual(
-    '{"follow__deleted":false,"host":"hexlet.io","proxy__deleted":"123.234.53.22","timeout":{"__old":50,"__new":20},"verbose__added":true}',
-  );
+  expect(genDiff(file1, file2, 'json')).toEqual(readFile('resultJSON.txt'));
 });
