@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import { expect, test } from '@jest/globals';
+import { expect, test, jest } from '@jest/globals';
 import fs from 'fs';
 import genDiff from '../src/gendiff-src.js';
 
@@ -32,4 +32,15 @@ test('--format json', () => {
   const file2 = getFixturePath('flat2.json');
 
   expect(genDiff(file1, file2, 'json')).toEqual(readFile('resultJson.txt'));
+});
+test('--format unsupported', () => {
+  const file1 = getFixturePath('flat1.json');
+  const file2 = getFixturePath('flat2.json');
+
+  const logSpy = jest.spyOn(console, 'log');
+
+  genDiff(file1, file2, 'someUnsupportedOutputFormat');
+  expect(logSpy).toHaveBeenCalled();
+  expect(logSpy).toHaveBeenCalledTimes(1);
+  expect(logSpy).toHaveBeenCalledWith('Error: \'someUnsupportedOutputFormat\' output format is not supported');
 });
