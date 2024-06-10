@@ -8,8 +8,6 @@ const mapping = {
 const makeStringArray = (diffObject) => Object.keys(diffObject).map((key) => {
   if (diffObject[key].type === 'added') return mapping.added(diffObject[key], key);
   if (diffObject[key].type === 'deleted') return mapping.deleted(diffObject[key], key);
-
-  // eslint-disable-next-line no-underscore-dangle
   if (diffObject[key].type === 'updated') return mapping.updated(diffObject[key], key);
   return mapping.unchanged(diffObject[key], key);
 });
