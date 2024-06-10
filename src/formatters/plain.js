@@ -1,13 +1,19 @@
-const filterUnchanged = (diffObject) => Object.keys(diffObject).filter((key) => key.includes('__added')
-  || key.includes('__deleted')
-  || typeof diffObject[key] === 'object');
+const filterUnchanged = (diffObject) => Object.keys(diffObject).filter((key) => diffObject[key].type === 'added'
+  || diffObject[key].type === 'deleted'
+  || diffObject[key].type === 'updated');
+
+const mapping = {
+  added: (node, path) => `Property '${path}' was added with value: ${node.value}`,
+  deleted: (node, path) => `Property '${path}' was removed`,
+  updated: (node, path) => `Property '${path}' was updated. From ${node.old} to ${node.new}`,
+};
 
 const makeStringArray = (diffObject) => filterUnchanged(diffObject).map((key) => {
-  if (key.endsWith('__added')) return `Property '${key.replace('__added', '')}' was added with value: ${diffObject[key]}`;
-  if (key.endsWith('__deleted')) return `Property '${key.replace('__deleted', '')}' was removed`;
+  if (diffObject[key].type === 'added') return mapping.added(diffObject[key], key);
+  if (diffObject[key].type === 'deleted') return mapping.deleted(diffObject[key], key);
 
   // eslint-disable-next-line no-underscore-dangle
-  return `Property '${key}' was updated. From ${diffObject[key].__old} to ${diffObject[key].__new}`;
+  return mapping.updated(diffObject[key], key);
 });
 const format = (diffObject) => makeStringArray(diffObject).join('\n');
 
