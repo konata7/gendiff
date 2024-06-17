@@ -6,7 +6,7 @@ const mapping = {
   added: (node, path) => `Property '${path}' was added with value: ${node.value}`,
   deleted: (node, path) => `Property '${path}' was removed`,
   updated: (node, path) => `Property '${path}' was updated. From ${node.old} to ${node.new}`,
-  unchanged: (node, path) => '',
+  unchanged: 'not used',
 };
 
 const makeStringArray = (diffObject) => filterUnchanged(diffObject).map((key) => {
