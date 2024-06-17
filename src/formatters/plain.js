@@ -11,7 +11,8 @@ const mapping = {
 
 const makeStringArray = (diffObject) => filterUnchanged(diffObject).map((key) => {
   const node = diffObject[key];
-  return mapping[node.type](diffObject[key], key);
+  if (Object.hasOwn(mapping, node.type)) return mapping[node.type](diffObject[key], key);
+  throw new Error(`Unexpected status '${node.type}' for ${key}`);
 });
 const format = (diffObject) => makeStringArray(diffObject).join('\n');
 

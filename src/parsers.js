@@ -10,7 +10,7 @@ const parse = (data, format) => {
 
   console.log(`${format} file format is not supported.`);
 
-  return 0;
+  throw new Error(`Unsupported format ${format}`);
 };
 
 export default parse;
