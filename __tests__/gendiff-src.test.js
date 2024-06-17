@@ -49,7 +49,7 @@ test('unsupported file format', () => {
 
   const logSpy = jest.spyOn(console, 'log');
 
-  genDiff(file1, file1);
+  expect(() => genDiff(file1, file1)).toThrowError();
   expect(logSpy).toHaveBeenCalled();
   expect(logSpy).toHaveBeenCalledWith('txt file format is not supported.');
 });
